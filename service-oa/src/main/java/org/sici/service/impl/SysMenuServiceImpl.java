@@ -2,7 +2,6 @@ package org.sici.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import jakarta.validation.constraints.NotNull;
 import org.sici.config.exception.SiwenException;
 import org.sici.mapper.SysRoleMenuMapper;
 import org.sici.model.system.SysMenu;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

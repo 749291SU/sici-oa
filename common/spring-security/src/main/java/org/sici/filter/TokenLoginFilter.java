@@ -1,10 +1,7 @@
 package org.sici.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
 import org.sici.custom.CustomUser;
 import org.sici.result.ResponseUtil;
 import org.sici.result.Result;
@@ -19,6 +16,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -45,8 +46,7 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             LoginVo loginVo = new ObjectMapper().readValue(request.getInputStream(), LoginVo.class);
-//            new UsernamePasswordAuthenticationToken()
-            UsernamePasswordAuthenticationToken unauthenticated = UsernamePasswordAuthenticationToken.unauthenticated(loginVo.getUsername(), loginVo.getPassword());
+            UsernamePasswordAuthenticationToken unauthenticated = new UsernamePasswordAuthenticationToken(loginVo.getUsername(), loginVo.getPassword());
             super.setDetails(request, unauthenticated);
             return super.getAuthenticationManager().authenticate(unauthenticated);
         } catch (IOException e) {
@@ -57,7 +57,7 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
     // 认证成功调用
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        // 获取当前用户
+//         获取当前用户
         CustomUser customUser = (CustomUser) authResult.getPrincipal();
         // 生成token
         String token = JwtHelper.createToken(customUser.getSysUser().getId(), customUser.getSysUser().getUsername());
