@@ -10,3 +10,7 @@ spring:
     url: jdbc:mysql://101.201.117.19:3306/guigu-oa?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=utf-8
     username: root
     password: 345267
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8

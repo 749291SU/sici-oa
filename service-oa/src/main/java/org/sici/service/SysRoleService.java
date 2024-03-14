@@ -2,6 +2,10 @@ package org.sici.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.sici.model.system.SysRole;
+import org.sici.vo.system.AssginRoleVo;
+
+import java.util.List;
+import java.util.Map;
 
 /**
 * @author 20148
@@ -10,4 +14,7 @@ import org.sici.model.system.SysRole;
 */
 public interface SysRoleService extends IService<SysRole> {
 
+    Map<String, List<SysRole>> findRoleByUserId(Long id);
+
+    void doAssign(AssginRoleVo assignRoleVo);
 }

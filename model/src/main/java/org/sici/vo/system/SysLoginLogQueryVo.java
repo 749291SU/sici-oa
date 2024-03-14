@@ -1,12 +1,12 @@
 package org.sici.vo.system;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import io.swagger.annotations.ApiModelProperty;
 
 @Data
 public class SysLoginLogQueryVo {
 	
-	@ApiModelProperty(value = "用户账号")
+	@Schema(description = "用户账号")
 	private String username;
 
 	private String createTimeBegin;

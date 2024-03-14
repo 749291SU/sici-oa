@@ -1,7 +1,10 @@
 package org.sici.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 import org.sici.model.system.SysMenu;
+
+import java.util.List;
 
 /**
 * @author 20148
@@ -11,6 +14,7 @@ import org.sici.model.system.SysMenu;
 */
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
+    List<SysMenu> findUserMenuListByUserId(@Param(value = "userId")Long userId);
 }
 
 
