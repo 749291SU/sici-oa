@@ -1,9 +1,12 @@
 package org.sici.config.exception;
 
 import org.sici.result.Result;
+import org.sici.result.ResultCodeEnum;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 /**
  * @projectName: oa-parent
@@ -24,7 +27,7 @@ public class GlobalExceptionHandler {
     public Result handleException(Exception e) {
         // print StackTrace
         e.printStackTrace();
-        return Result.fail("全局异常");
+        return Result.build(null, ResultCodeEnum.GLOBAL_ERROR);
     }
 
     // add ArithmeticException handler
@@ -33,7 +36,7 @@ public class GlobalExceptionHandler {
     public Result handleArithmeticException(ArithmeticException e) {
         // print StackTrace
         e.printStackTrace();
-        return Result.fail("算术异常");
+        return Result.build(null, ResultCodeEnum.ARITHMETIC_ERROR);
     }
 
     // add customer defined exception(SiwenException) handler
@@ -42,6 +45,14 @@ public class GlobalExceptionHandler {
     public Result handleSiwenException(SiwenException e) {
         // print StackTrace
         e.printStackTrace();
-        return Result.fail("自定义异常");
+        return Result.build(null, ResultCodeEnum.CUSTOM_ERROR);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseBody
+    public Result handleAccessDeniedException(AccessDeniedException e) {
+        // print StackTrace
+        e.printStackTrace();
+        return Result.build(null, ResultCodeEnum.PERMISSION);
     }
 }

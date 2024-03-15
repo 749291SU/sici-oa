@@ -1,11 +1,13 @@
 package org.sici.filter;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.sici.custom.CustomUser;
 import org.sici.result.ResponseUtil;
 import org.sici.result.Result;
 import org.sici.result.ResultCodeEnum;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import util.JwtHelper;
 import org.sici.vo.system.LoginVo;
@@ -34,11 +36,14 @@ import java.util.HashMap;
  */
 
 public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
+    private RedisTemplate redisTemplate;
     // 构造方法
-    public TokenLoginFilter(AuthenticationManager authenticationManager) {
+    public TokenLoginFilter(AuthenticationManager authenticationManager, RedisTemplate redisTemplate) {
         super.setAuthenticationManager(authenticationManager);
         super.setPostOnly(false);
         super.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/admin/system/index/login", "POST"));
+
+        this.redisTemplate = redisTemplate;
     }
 
     // 登录认证
@@ -64,6 +69,9 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
         // 返回token
         HashMap<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("token", token);
+
+        redisTemplate.opsForValue().set(customUser.getSysUser().getUsername(), JSON.toJSONString(customUser.getAuthorities()));
+
         ResponseUtil.out(response, Result.ok(stringObjectHashMap));
     }
 

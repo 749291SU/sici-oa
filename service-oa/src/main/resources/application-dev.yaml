@@ -15,6 +15,19 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
+  redis:
+    host: 101.201.117.19
+    port: 6379
+    database: 0
+    timeout: 1800000
+    password:
+    jedis:
+      pool:
+        max-active: 20 #最大连接数
+        max-wait: -1    #最大阻塞等待时间(负数表示没限制)
+        max-idle: 5    #最大空闲
+        min-idle: 0     #最小空闲
+
   activiti:
     #    false:默认，数据库表不变，但是如果版本不对或者缺失表会抛出异常（生产使用）
     #    true:表不存在，自动创建（开发使用）
@@ -30,3 +43,6 @@ spring:
     history-level: full
     #校验流程文件，默认校验resources下的process 文件夹的流程文件
     check-process-definitions: true
+
+
+

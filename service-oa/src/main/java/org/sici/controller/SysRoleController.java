@@ -7,10 +7,12 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.sici.model.system.SysRole;
 import org.sici.result.Result;
+import org.sici.result.ResultCodeEnum;
 import org.sici.service.SysRoleService;
 import org.sici.vo.system.AssginRoleVo;
 import org.sici.vo.system.SysRoleQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +41,7 @@ public class SysRoleController {
         return Result.ok(sysRoleService.list());
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.list')")
     @Operation(summary = "条件分页查询")
     @GetMapping("{page}/{limit}")
     public Result pageQueryRole(@Parameter(name = "page") @PathVariable("page") Integer page,
@@ -56,6 +59,7 @@ public class SysRoleController {
         return Result.ok(pages);
     }
     // remove SysRole by id
+    @PreAuthorize("hasAuthority('bnt.sysRole.remove')")
     @Operation(summary = "根据id删除角色")
     @DeleteMapping("remove/{id}")
     public Result removeById(@Parameter(name = "id") @PathVariable("id") Long id) {
@@ -63,11 +67,12 @@ public class SysRoleController {
         if (b) {
             return Result.ok();
         } else {
-            return Result.fail();
+            return Result.fail(ResultCodeEnum.PERMISSION);
         }
     }
 
     // remove SysRole by ids
+    @PreAuthorize("hasAuthority('bnt.sysRole.remove')")
     @Operation(summary = "根据id批量删除角色")
     @DeleteMapping("batchRemove")
     public Result batchRemoveByIds(@Parameter(name = "ids") @RequestBody List<Long> ids) {
@@ -80,6 +85,7 @@ public class SysRoleController {
     }
 
     // add SysRole
+    @PreAuthorize("hasAuthority('bnt.sysRole.add')")
     @Operation(summary = "添加角色")
     @PostMapping("save")
     public Result save(@Parameter(name = "sysRole") @RequestBody SysRole sysRole) {
@@ -92,6 +98,7 @@ public class SysRoleController {
     }
 
     // update SysRole
+    @PreAuthorize("hasAuthority('bnt.sysRole.update')")
     @Operation(summary = "更新角色")
     @PutMapping("update")
     public Result update(@Parameter(name = "sysRole") @RequestBody SysRole sysRole) {
@@ -104,6 +111,7 @@ public class SysRoleController {
     }
 
     // get SysRole by id
+    @PreAuthorize("hasAuthority('bnt.sysRole.list')")
     @Operation(summary = "根据id查询角色")
     @GetMapping("get/{id}")
     public Result getById(@Parameter(name = "id") @PathVariable("id") Long id) {
