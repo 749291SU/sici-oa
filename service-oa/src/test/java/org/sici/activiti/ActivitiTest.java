@@ -11,6 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @projectName: oa-parent
  * @package: org.sici.activiti
@@ -105,6 +108,56 @@ public class ActivitiTest {
         });
     }
 
+    // UEL
+    @Test
+    void deployUEL() {
+        Deployment deploy = repositoryService.createDeployment().addClasspathResource("process/jiaban.bpmn20.xml")
+                .name("加班")
+                .key("jiaban")
+                .deploy();
+        System.out.println(deploy.getId());
+        System.out.println(deploy.getName());
+    }
 
+    @Test
+    void startProcessUEL() {
+        Map<String, Object> stringStringHashMap = new HashMap<>();
+        stringStringHashMap.put("assignee1", "suxiaowne");
+        stringStringHashMap.put("assignee2", "pengjianeng");
 
+        ProcessInstance jiaban = runtimeService.startProcessInstanceByKey("jiaban", "1001",
+        stringStringHashMap);
+
+        System.out.println(jiaban.getProcessDefinitionId());
+        System.out.println(jiaban.getId());
+        System.out.println(jiaban.getActivityId());
+    }
+
+    @Test
+    void findPendingTask1() {
+        taskService.createTaskQuery().taskAssignee("Jack").list().forEach(task -> {
+            System.out.println(task.getId());
+            System.out.println(task.getName());
+            System.out.println(task.getAssignee());
+        });
+    }
+
+    // listener
+    @Test
+    void deployListener() {
+        Deployment deploy = repositoryService.createDeployment().addClasspathResource("process/jiaban01.bpmn20.xml")
+                .name("加班")
+                .key("jiaban01")
+                .deploy();
+        System.out.println(deploy.getId());
+        System.out.println(deploy.getName());
+    }
+
+    @Test
+    void startProcessListener() {
+        ProcessInstance jiaban = runtimeService.startProcessInstanceByKey("jiaban01");
+        System.out.println(jiaban.getProcessDefinitionId());
+        System.out.println(jiaban.getId());
+        System.out.println(jiaban.getActivityId());
+    }
 }
