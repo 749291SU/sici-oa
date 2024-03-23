@@ -1,7 +1,9 @@
 package org.sici.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.sici.model.process.ProcessTemplate;
+import org.sici.result.Result;
 
 /**
 * @author 20148
@@ -10,4 +12,5 @@ import org.sici.model.process.ProcessTemplate;
 */
 public interface ProcessTemplateService extends IService<ProcessTemplate> {
 
+    IPage<ProcessTemplate> selectPage(Integer page, Integer limit);
 }
