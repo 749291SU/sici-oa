@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="jiaban04" name="加班事务流程" isExecutable="true">
+    <startEvent id="sid-814BF519-2EC7-4762-B3D6-B30A5C09CFC4"></startEvent>
+    <userTask id="jingli" name="经理审批" activiti:candidateUsers="tom01,tom02"></userTask>
+    <sequenceFlow id="sid-50863434-8011-486E-BE3F-5E18972F9D41" sourceRef="sid-814BF519-2EC7-4762-B3D6-B30A5C09CFC4" targetRef="jingli"></sequenceFlow>
+    <userTask id="renshi" name="人事审批" activiti:candidateUsers="rose01,rose02"></userTask>
+    <sequenceFlow id="sid-16EFC284-B592-4D9A-8CEE-A6107DA3D2BB" sourceRef="jingli" targetRef="renshi"></sequenceFlow>
+    <endEvent id="sid-7F505AD2-A0C0-4FF5-ADA6-1C42CD4F39B6"></endEvent>
+    <sequenceFlow id="sid-34174CE7-5047-4AE1-8FAB-B210DFFA71BB" sourceRef="renshi" targetRef="sid-7F505AD2-A0C0-4FF5-ADA6-1C42CD4F39B6"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_jiaban04">
+    <bpmndi:BPMNPlane bpmnElement="jiaban04" id="BPMNPlane_jiaban04">
+      <bpmndi:BPMNShape bpmnElement="sid-814BF519-2EC7-4762-B3D6-B30A5C09CFC4" id="BPMNShape_sid-814BF519-2EC7-4762-B3D6-B30A5C09CFC4">
+        <omgdc:Bounds height="30.0" width="30.0" x="215.1492347575401" y="199.16843125139886"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="jingli" id="BPMNShape_jingli">
+        <omgdc:Bounds height="80.0" width="100.0" x="290.14919865136386" y="174.16842865608703"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="renshi" id="BPMNShape_renshi">
+        <omgdc:Bounds height="80.0" width="100.0" x="435.14923475754006" y="174.16843125139886"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-7F505AD2-A0C0-4FF5-ADA6-1C42CD4F39B6" id="BPMNShape_sid-7F505AD2-A0C0-4FF5-ADA6-1C42CD4F39B6">
+        <omgdc:Bounds height="28.0" width="28.0" x="580.1492347575401" y="200.16843125139886"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-16EFC284-B592-4D9A-8CEE-A6107DA3D2BB" id="BPMNEdge_sid-16EFC284-B592-4D9A-8CEE-A6107DA3D2BB">
+        <omgdi:waypoint x="390.14919865136386" y="214.16842955102192"></omgdi:waypoint>
+        <omgdi:waypoint x="435.14923475754006" y="214.16843035646397"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-50863434-8011-486E-BE3F-5E18972F9D41" id="BPMNEdge_sid-50863434-8011-486E-BE3F-5E18972F9D41">
+        <omgdi:waypoint x="245.1492347575401" y="214.16843089749258"></omgdi:waypoint>
+        <omgdi:waypoint x="290.14919865136386" y="214.16842983577462"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-34174CE7-5047-4AE1-8FAB-B210DFFA71BB" id="BPMNEdge_sid-34174CE7-5047-4AE1-8FAB-B210DFFA71BB">
+        <omgdi:waypoint x="535.1492347575401" y="214.16843125139886"></omgdi:waypoint>
+        <omgdi:waypoint x="580.1492347575401" y="214.16843125139886"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

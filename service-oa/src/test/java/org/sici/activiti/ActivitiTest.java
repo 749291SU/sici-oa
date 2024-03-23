@@ -122,7 +122,7 @@ public class ActivitiTest {
     @Test
     void startProcessUEL() {
         Map<String, Object> stringStringHashMap = new HashMap<>();
-        stringStringHashMap.put("assignee1", "suxiaowne");
+        stringStringHashMap.put("assignee1", "suxiaowen");
         stringStringHashMap.put("assignee2", "pengjianeng");
 
         ProcessInstance jiaban = runtimeService.startProcessInstanceByKey("jiaban", "1001",
