@@ -13,4 +13,6 @@ import org.sici.result.Result;
 public interface ProcessTemplateService extends IService<ProcessTemplate> {
 
     IPage<ProcessTemplate> selectPage(Integer page, Integer limit);
+
+    Result publish(Long id);
 }

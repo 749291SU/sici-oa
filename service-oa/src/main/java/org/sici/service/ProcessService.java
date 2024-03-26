@@ -1,7 +1,10 @@
 package org.sici.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.sici.model.process.Process;
+import org.sici.vo.process.ProcessQueryVo;
+import org.sici.vo.process.ProcessVo;
 
 /**
 * @author 20148
@@ -10,4 +13,6 @@ import org.sici.model.process.Process;
 */
 public interface ProcessService extends IService<Process> {
 
+    IPage<ProcessVo> selectPage(IPage<ProcessVo> pagePram, ProcessQueryVo processQueryVo);
+    void deployProcessByZip(String zipFilePath);
 }

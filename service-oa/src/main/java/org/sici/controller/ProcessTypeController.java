@@ -77,5 +77,13 @@ public class ProcessTypeController {
     public Result update(@ApiParam("process type") @RequestBody ProcessType processType) {
         return Result.ok(processTypeService.updateById(processType));
     }
+
+
+    // findAll
+    @ApiOperation(value = "find all process type")
+    @GetMapping("findAll")
+    public Result findAll() {
+        return Result.ok(processTypeService.list());
+    }
 }
 

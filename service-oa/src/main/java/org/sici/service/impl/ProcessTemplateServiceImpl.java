@@ -7,11 +7,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.sici.model.process.ProcessTemplate;
 import org.sici.model.process.ProcessType;
 import org.sici.result.Result;
+import org.sici.service.ProcessService;
 import org.sici.service.ProcessTemplateService;
 import org.sici.mapper.ProcessTemplateMapper;
 import org.sici.service.ProcessTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +27,8 @@ public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMappe
     implements ProcessTemplateService {
     @Autowired
     private ProcessTypeService processTypeService;
+    @Autowired
+    private ProcessService processService;
     @Override
     public IPage<ProcessTemplate> selectPage(Integer page, Integer limit) {
         IPage<ProcessTemplate> processTemplatePage = new Page<>();
@@ -47,6 +51,18 @@ public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMappe
             record.setProcessTypeName(processTypeService.getOne(processTypeLambdaQueryWrapper).getName());
         }
         return processTemplateIPage;
+    }
+
+    @Override
+    @Transactional
+    public Result publish(Long id) {
+        ProcessTemplate processTemplate = super.getById(id);
+        processTemplate.setStatus(1);
+        super.updateById(processTemplate);
+
+        // TODO 流程定义部署
+        processService.deployProcessByZip(processTemplate.getProcessDefinitionPath());
+        return Result.ok();
     }
 }
 

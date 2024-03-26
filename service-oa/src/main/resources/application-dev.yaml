@@ -7,7 +7,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://101.201.117.19:3306/guigu-oa?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=utf-8&nullCatalogMeansCurrent=true
+    url: jdbc:mysql://8.136.101.218:3306/guigu-oa?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=utf-8&nullCatalogMeansCurrent=true
     username: root
     password: 345267
 
@@ -16,7 +16,7 @@ spring:
     time-zone: GMT+8
 
   redis:
-    host: 101.201.117.19
+    host: 8.136.101.218
     port: 6379
     database: 0
     timeout: 1800000
