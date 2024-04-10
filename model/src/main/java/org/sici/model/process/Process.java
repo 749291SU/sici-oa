@@ -38,7 +38,7 @@ public class Process extends BaseEntity {
 	private String description;
 
 	@Schema(description = "表单值")
-	@TableField("form_descriptions")
+	@TableField("form_values")
 	private String formValues;
 
 	@Schema(description = "流程实例id")

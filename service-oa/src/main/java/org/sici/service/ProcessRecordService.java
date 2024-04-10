@@ -9,5 +9,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2024-01-30 19:45:08
 */
 public interface ProcessRecordService extends IService<ProcessRecord> {
-
+    void record(Long processId, Integer status, String description);
 }

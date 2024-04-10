@@ -5,7 +5,6 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.repository.Deployment;
-import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +36,9 @@ public class ActivitiTest {
 
     @Test
     void deployTest() {
-        Deployment deploy = repositoryService.createDeployment().addClasspathResource("process/qingjia.bpmn20.xml")
-                .addClasspathResource("process/qingjia.png")
-                .name("请假流程")
-                .key("qingjia")
+        Deployment deploy = repositoryService.createDeployment()
+                .addClasspathResource("process/jiaban.bpmn20.xml")
+                .name("加班流程")
                 .deploy();
 
         System.out.println(deploy.getId());
@@ -50,7 +48,7 @@ public class ActivitiTest {
 
     @Test
     void startProcess() {
-        ProcessInstance qingjia = runtimeService.startProcessInstanceByKey("qingjia");
+        ProcessInstance qingjia = runtimeService.startProcessInstanceByKey("jiaban");
         System.out.println(qingjia.getProcessDefinitionId());
         System.out.println(qingjia.getId());
         System.out.println(qingjia.getActivityId());

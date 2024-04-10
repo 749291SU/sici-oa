@@ -1,6 +1,7 @@
 package org.sici.filter;
 
 import com.alibaba.fastjson.JSON;
+import org.sici.custom.LoginUserInfoHelper;
 import org.sici.result.ResponseUtil;
 import org.sici.result.Result;
 import org.sici.result.ResultCodeEnum;
@@ -71,9 +72,14 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 String authorityString = (String) redisTemplate.opsForValue().get(username);
                 List<Map> maps = JSON.parseArray(authorityString, Map.class);
                 List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+                if (null == maps) {
+                    maps = Collections.emptyList();
+                }
                 for (Map map : maps) {
                     authorities.add(new SimpleGrantedAuthority((String) map.get("authority")));
                 }
+                LoginUserInfoHelper.setUserId(JwtHelper.getUserId(token));
+                LoginUserInfoHelper.setUsername(username);
                 return new UsernamePasswordAuthenticationToken(username, null, authorities);
             }
         }
