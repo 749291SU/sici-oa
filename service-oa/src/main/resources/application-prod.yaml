@@ -7,7 +7,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://8.136.101.218:3306/guigu-oa?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=utf-8&nullCatalogMeansCurrent=true
+    url: jdbc:mysql://sici-oa-mysql:3306/guigu-oa?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=utf-8&nullCatalogMeansCurrent=true
     username: root
     password: 345267
 
@@ -16,7 +16,7 @@ spring:
     time-zone: GMT+8
 
   redis:
-    host: 8.136.101.218
+    host: sici-oa-redis
     port: 6379
     database: 0
     timeout: 1800000
@@ -47,7 +47,4 @@ spring:
 wechat:
   mpAppId: wx6ce73b6ffb0ae646
   mpAppSecret: 9898baf308136a87bd289726bcd7654d
-  userInfoUrl:  http://oasici.viphk.nnhk.cc/admin/wechat/userInfo
-
-
-
+  userInfoUrl:  https://sicioa.top/admin/wechat/userInfo
