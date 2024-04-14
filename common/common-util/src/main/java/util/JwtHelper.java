@@ -3,51 +3,41 @@ package util;
 import io.jsonwebtoken.*;
 import org.springframework.util.StringUtils;
 
-import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
-import java.security.SecureRandom;
 import java.util.Date;
 
-/**
- * @projectName: oa-parent
- * @package: org.sici.result
- * @className: JwtHelper
- * @author: 749291
- * @description: TODO
- * @date: 3/1/2024 6:12 PM
- * @version: 1.0
- */
-
+//jwt工具类
 public class JwtHelper {
 
     private static long tokenExpiration = 365 * 24 * 60 * 60 * 1000;
-    private static final String SECRET = "S/4AN9IsSRUC~{0c4]y#$F2XbV8^`#a14vawn<~Kr@(D%3TF-p1s/h{Y9k7y((rRS/4AN9IsSRUC~{0c4]y#$F2XbV8^`#a14vawn<~Kr@(D%3TF-p1s/h{Y9k7y((rRS/4AN9IsSRUC~{0c4]y#$F2XbV8^`#a14vawn<~Kr@(D%3TF-p1s/h{Y9k7y((rRS/4AN9IsSRUC~{0c4]y#$F2XbV8^`#a14vawn<~Kr@(D%3TF-p1s/h{Y9k7y((rR";
-    private static final SecretKey key = Jwts.SIG.HS512.key()
-            .random(new SecureRandom(SECRET.getBytes(StandardCharsets.UTF_8)))
-            .build();
+    private static String tokenSignKey = "123456";
 
+    //根据用户id和用户名称生成token字符串
     public static String createToken(Long userId, String username) {
         String token = Jwts.builder()
+                //分类
                 .setSubject("AUTH-USER")
+
+                //设置token有效时长
                 .setExpiration(new Date(System.currentTimeMillis() + tokenExpiration))
+
+                //设置主体部分
                 .claim("userId", userId)
                 .claim("username", username)
-                .signWith(SignatureAlgorithm.HS512, key)
+
+                //签名部分
+                .signWith(SignatureAlgorithm.HS512, tokenSignKey)
                 .compressWith(CompressionCodecs.GZIP)
                 .compact();
         return token;
     }
 
+    //从生成token字符串获取用户id
     public static Long getUserId(String token) {
         try {
             if (StringUtils.isEmpty(token)) return null;
 
-            Claims claims = Jwts.parser()
-                    .verifyWith(key)
-                    .build()
-                    .parseSignedClaims(token)
-                    .getPayload();
-
+            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(tokenSignKey).parseClaimsJws(token);
+            Claims claims = claimsJws.getBody();
             Integer userId = (Integer) claims.get("userId");
             return userId.longValue();
         } catch (Exception e) {
@@ -56,15 +46,13 @@ public class JwtHelper {
         }
     }
 
+    //从生成token字符串获取用户名称
     public static String getUsername(String token) {
         try {
             if (StringUtils.isEmpty(token)) return "";
 
-            Claims claims = Jwts.parser()
-                    .verifyWith(key)
-                    .build()
-                    .parseSignedClaims(token)
-                    .getPayload();
+            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(tokenSignKey).parseClaimsJws(token);
+            Claims claims = claimsJws.getBody();
             return (String) claims.get("username");
         } catch (Exception e) {
             e.printStackTrace();

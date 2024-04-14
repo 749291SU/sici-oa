@@ -9,3 +9,4 @@ spring:
 wechat:
   mpAppId: wx6ce73b6ffb0ae646
   mpAppSecret: 9898baf308136a87bd289726bcd7654d
+  userInfoUrl:  http://oasici.viphk.nnhk.cc/admin/wechat/userInfo

@@ -26,7 +26,7 @@
         <java.version>1.8</java.version>
         <mybatis-plus.version>3.5.3</mybatis-plus.version>
         <mysql.version>8.0.30</mysql.version>
-        <jwt.version>0.12.5</jwt.version>
+        <jwt.version>0.9.1</jwt.version>
         <fastjson.version>2.0.21</fastjson.version>
         <knife4j.version>3.0.3</knife4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

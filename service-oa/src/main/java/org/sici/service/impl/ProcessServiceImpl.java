@@ -69,6 +69,8 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process>
     private ProcessRecordService processRecordService;
     @Autowired
     private HistoryService historyService;
+    @Autowired
+    private MessageService messageService;
 
     @Override
     public IPage<ProcessVo> selectPage(IPage<ProcessVo> pagePram, ProcessQueryVo processQueryVo) {
@@ -143,10 +145,12 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process>
         List<Task> currentTaskList = this.getCurrentTaskList(processInstance.getId());
         List<String> nameList = new ArrayList<>();
         for (Task task : currentTaskList) {
-            String userName = sysUserService.getUserByUserName(task.getAssignee()).getName();
-            nameList.add(userName);
+            SysUser nextAssigner = sysUserService.getUserByUserName(task.getAssignee());
+            String name = nextAssigner.getName();
+            nameList.add(name);
 
-            // TODO send message to user
+//             公众号消息推送
+//            messageService.pushPendingMessage(process.getId(), nextAssigner.getId(), task.getId());
         }
 
         process.setProcessInstanceId(processInstance.getId());
@@ -258,19 +262,26 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process>
             if (approvalVo.getStatus() == 1) {
                 process.setDescription("审批通过");
                 process.setStatus(2);
+
+                // 公众号消息推送
+//                messageService.pushProcessedMessage(process.getId(), process.getUserId(), 1);
             } else {
                 process.setDescription("审批驳回");
                 process.setStatus(-1);
+                // 公众号消息推送
+//                messageService.pushProcessedMessage(process.getId(), process.getUserId(), -1);
             }
             this.updateById(process);
         } else {
             // 获取当前任务的所有后面的审批人
             List<String> nameList = new ArrayList<>();
             for (Task task : currentTaskList) {
-                String userName = sysUserService.getUserByUserName(task.getAssignee()).getName();
-                nameList.add(userName);
+                SysUser nextAssigner = sysUserService.getUserByUserName(task.getAssignee());
+                String name = nextAssigner.getName();
+                nameList.add(name);
 
-                // TODO  公众号消息推送
+                // 公众号消息推送
+//                messageService.pushPendingMessage(process.getId(), nextAssigner.getId(), task.getId());
             }
             process.setDescription("waiting for " + StringUtils.join(nameList.toArray(), ",") + " to approve");
             process.setStatus(1);

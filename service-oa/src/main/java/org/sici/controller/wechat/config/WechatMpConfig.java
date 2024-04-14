@@ -7,6 +7,7 @@ import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import util.JwtHelper;
 
 /**
  * @projectName: oa-parent
@@ -35,6 +36,7 @@ public class WechatMpConfig {
         WxMpDefaultConfigImpl wxMpConfigStorage = new WxMpDefaultConfigImpl();
         wxMpConfigStorage.setAppId(wechatAccountConfig.getMpAppId());
         wxMpConfigStorage.setSecret(wechatAccountConfig.getMpAppSecret());
+//        wxMpConfigStorage.setTo
         return wxMpConfigStorage;
     }
 }
