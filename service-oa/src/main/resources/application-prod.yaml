@@ -47,4 +47,4 @@ spring:
 wechat:
   mpAppId: wx6ce73b6ffb0ae646
   mpAppSecret: 9898baf308136a87bd289726bcd7654d
-  userInfoUrl:  https://sicioa.top:8080/admin/wechat/userInfo
+  userInfoUrl:  http://sicioa.top:8080/admin/wechat/userInfo
